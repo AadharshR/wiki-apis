@@ -1,0 +1,8 @@
+body{
+      background-image: url('/static/images/hqimage.jpg');
+      background-repeat: stretch;
+      background-size: auto;
+      max-width:100%;
+      height:auto;
+      max-height:100%;
+}
