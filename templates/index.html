@@ -4,16 +4,20 @@
         <link rel="stylesheet" href= "{{ url_for('static',filename='styles/index.css')}}">
     </head>
     <body>
-    <div>
+    <div class = "form-data">
     <form action = "{{ip}}/search" method="GET">
         <p> 
-            Enter the name you want to search for!
+            Enter the term you want to search for!
             <input type = "text" name="term">
-            <input type = "submit" value="Submit"/>
+            <div class="snake-button">
+             <input type = "submit" value="Submit"/>
+            </div>
+
         </p>
     </form>
+    </div>
+    <img class="right-bottom" src = 'static/images/powered_by.png'/>
     </body>
 
-    </div>
 
 </html>

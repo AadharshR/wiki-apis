@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href= "{{ url_for('static',filename='styles/index.css')}}">
+  </head>
   <body>
+    <div>
     {%for out in results%}
          <span>
-            <b>
             {{out}}
-            </b>
-            <br>
-            <br>
         </span>
         {% endfor %}
-
+      </div>
+    <img class="right-bottom" src = 'static/images/powered_by.png'/>
   </body>
+  
 </div>
 </html>

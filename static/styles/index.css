@@ -1,8 +1,116 @@
 body{
       background-image: url('/static/images/hqimage.jpg');
-      background-repeat: stretch;
-      background-size: auto;
-      max-width:100%;
-      height:auto;
-      max-height:100%;
+      width: 100%;
+      height: auto;  /* Full height */
+    
+      /* Center and scale the image nicely */
+      background-repeat: no-repeat;
+      background-size: cover;
+      color: black;
+      overflow: hidden;
 }
+.right-bottom {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+.form-data{
+      text-align: center;
+      padding-top: 10%;
+}
+      .snake-button {
+            position: relative;
+            display: inline-block;
+            padding: 7px 12px 8px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            font-weight: bold;
+            color: #444;
+            line-height: 1;
+      }
+      .snake-button:before,
+      .snake-button:after {
+            content: "";
+            position: absolute;
+      }
+      .snake-button:before {
+            border-top: 2px solid currentColor;
+            border-left: 2px solid currentColor;
+            left: -2px;
+            bottom: 47%;
+            right: 100%;
+            top: 48%;
+      }
+      .snake-button:after {
+            border-right: 0 solid currentColor;
+            border-bottom: 0 solid currentColor;
+            right: -2px;
+            top: 0;
+            bottom: 100%;
+            left: 100%;
+      }
+      .snake-button span {
+            position: relative;
+            z-index: 2;
+      }
+      .snake-button span:before {
+            content: "→";
+            margin-right: 8px;
+            margin-left: -1px;
+            font-size: 1.6em;
+      }
+      
+      /**
+       * Animation part.
+       */
+      
+      .snake-button:hover:before {
+            animation: bordertop .25s 1 forwards linear;
+      }
+      .snake-button:hover:after {
+            animation: borderbottom .25s .25s 1 forwards linear;
+      }
+      .snake-button:hover,
+      .snake-button:focus {
+            border-right-color: currentColor ;
+            transition: border .02s linear;
+            transition-delay: .25s;
+      }
+      
+      @keyframes bordertop {
+            0% {
+                  top: 48%;
+                  bottom: 47%;
+            }
+            27% {
+                  top: -2px;
+                  right: 100%;
+            }
+            100% {
+                  bottom: 47%;
+                  top: -2px;
+                  right: -2px;
+            }
+      }
+      @keyframes borderbottom {
+            0% {
+                  border-right-width: 2px;
+                  border-bottom-width: 2px;
+                  left: 100%;
+                  bottom: 100%;
+            }
+            27% {
+                  bottom: -2px;
+                  left: 100%;
+            }
+            100% {
+                  border-bottom-width: 2px;
+                  border-right-width: 2px;
+                  bottom: -2px;
+                  left: -2px;
+            }
+      }
+      
+      
+ 

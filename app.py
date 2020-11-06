@@ -10,22 +10,7 @@ def cleanhtml(raw_html):
   cleantext = re.sub(cleanr, '', raw_html)
   return cleantext
 
-
-app = Flask(__name__)
-
-
-@app.route('/')
-def index():
-    ip = os.environ['HOST_IP']
-    return render_template('index.html', ip = ip)
-
-
-@app.route('/search', methods=['POST', 'GET'])
-def hello():
-    search_term = request.args.get('term')
-    results = requests.get(
-        'https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch='+search_term)
-    results = results.json()
+def process_data(results):
     response = []
     for key in results:
         if key == 'query':
@@ -41,6 +26,35 @@ def hello():
     for each in response:
         output = cleanhtml(each)
         clean_output.append(output)
+    return clean_output
+
+
+def process_image_urls(results):
+    image_response = []
+    print('results')
+    print(results.json())
+    results = results.json()
+    return results
+app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    ip = os.environ['HOST_IP']
+    return render_template('index.html', ip = ip)
+
+
+@app.route('/search', methods=['POST', 'GET'])
+def hello():
+    search_term = request.args.get('term')
+
+    results = requests.get(
+        'https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch='+search_term)
+    results = results.json()
+    clean_output = process_data(results)
+
+    image_results = requests.get('https://commons.wikimedia.org/w/api.php?action=query&generator=images&prop=imageinfo&gimlimit=500&redirects=1&titles='+search_term+'&iiprop=timestamp|user|userid|comment|canonicaltitle|url|size|dimensions|sha1|mime|thumbmime|mediatype|bitdepth&format=json')
+    cleaned_image_output = process_image_urls(image_results)
     return (render_template('results.html', results=clean_output))
 
 
