@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request, render_template
 import re
 import requests
 import os
+import pandas
+import random
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -31,17 +33,20 @@ def process_data(results):
 
 def process_image_urls(results):
     image_response = []
-    print('results')
-    print(results.json())
     results = results.json()
     return results
 app = Flask(__name__)
 
+def read_csv_and_find_random_id ():
+    df = pandas.read_csv('processed_output.csv')
+    entire_list = df.to_numpy().flatten()
+    return (random.choice(entire_list))
 
 @app.route('/')
 def index():
+    random_person = read_csv_and_find_random_id()
     ip = os.environ['HOST_IP']
-    return render_template('index.html', ip = ip)
+    return render_template('index.html', **locals())
 
 
 @app.route('/search', methods=['POST', 'GET'])
@@ -52,9 +57,8 @@ def hello():
         'https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch='+search_term)
     results = results.json()
     clean_output = process_data(results)
-
-    image_results = requests.get('https://commons.wikimedia.org/w/api.php?action=query&generator=images&prop=imageinfo&gimlimit=500&redirects=1&titles='+search_term+'&iiprop=timestamp|user|userid|comment|canonicaltitle|url|size|dimensions|sha1|mime|thumbmime|mediatype|bitdepth&format=json')
-    cleaned_image_output = process_image_urls(image_results)
+    # image_results = requests.get('https://commons.wikimedia.org/w/api.php?action=query&generator=images&prop=imageinfo&gimlimit=500&redirects=1&titles='+search_term+'&iiprop=timestamp|user|userid|comment|canonicaltitle|url|size|dimensions|sha1|mime|thumbmime|mediatype|bitdepth&format=json')
+    # cleaned_image_output = process_image_urls(image_results)
     return (render_template('results.html', results=clean_output))
 
 
